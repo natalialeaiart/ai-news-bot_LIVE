@@ -1,4 +1,3 @@
 feedparser
 pyTelegramBotAPI
-html
-re
+requests
