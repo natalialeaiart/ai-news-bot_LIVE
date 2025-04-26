@@ -1,9 +1,6 @@
 import os
 import telebot
 import feedparser
-import requests
-from flask import Flask
-import threading
 import html
 import re
 
@@ -20,7 +17,8 @@ SITES = [
     'https://feeds.bbci.co.uk/news/technology/rss.xml',
     'https://www.deeplearning.ai/the-batch/tag/news/feed/',
     'https://venturebeat.com/category/ai/feed/',
-    'https://syncedreview.com/feed/', 'https://www.wired.com/', 
+    'https://syncedreview.com/feed/',
+    'https://www.wired.com/',
     'https://www.technologyreview.com/feed/',
     'https://feeds.arstechnica.com/arstechnica/technology-lab',
     'https://habr.com/ru/rss/interesting/',
@@ -87,20 +85,6 @@ def run_bot():
             except Exception as e:
                 print(f"Ошибка отправки в Telegram: {e}")
 
-# === Веб-сервер Flask для Replit ===
-app = Flask('')
-
-@app.route('/')
-def home():
-    return "<h2>✅ AI News Bot работает! Бот запущен и проверяет новости.</h2>"
-
-def run():
-    app.run(host='0.0.0.0', port=8080)
-
-def keep_alive():
-    t = threading.Thread(target=run)
-    t.start()
-
+# === Запуск бота ===
 if __name__ == '__main__':
-    keep_alive()
     run_bot()
