@@ -1,14 +1,12 @@
 import os
 import telebot
 import feedparser
-import requests
 import html
 import re
 
 # === Настройки ===
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 CHANNEL_USERNAME = os.getenv("CHANNEL_USERNAME")
-ARCHIVE_CHANNEL_ID = os.getenv("ARCHIVE_CHANNEL_ID")  # Канал для архива ссылок
 
 # === Инициализация ===
 bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
@@ -34,10 +32,9 @@ KEYWORDS = [
     "automation", "robot", "autonomous", "genai", "ml", "vision"
 ]
 
-# === Файл для хранения опубликованных ссылок ===
+# === Работа с файлами опубликованных ссылок ===
 POSTED_URLS_FILE = "posted_urls.txt"
 
-# === Функции ===
 def load_posted_urls():
     if not os.path.exists(POSTED_URLS_FILE):
         return set()
@@ -48,6 +45,7 @@ def save_posted_url(url):
     with open(POSTED_URLS_FILE, "a", encoding="utf-8") as f:
         f.write(url + "\n")
 
+# === Функции ===
 def fetch_rss(url):
     feed = feedparser.parse(url)
     print(f"Найдено статей: {len(feed.entries)}")
@@ -71,7 +69,7 @@ def run_bot():
     for site in SITES:
         print(f"Проверяю: {site}")
         entries = fetch_rss(site)
-        for entry in entries[:3]:  # берём максимум 3 статьи с одного сайта
+        for entry in entries[:3]:
             url = entry.link
             title = entry.title
 
@@ -82,12 +80,11 @@ def run_bot():
             try:
                 print("\nГотовый пост:\n", post)
                 bot.send_message(CHANNEL_USERNAME, post, parse_mode="Markdown", disable_web_page_preview=False)
-                bot.send_message(ARCHIVE_CHANNEL_ID, url)  # отправляем ссылку в архивный канал
-                save_posted_url(url)  # сохраняем ссылку в файл
+                save_posted_url(url)
                 print(f"✅ Опубликовано: {title}")
             except Exception as e:
                 print(f"❗ Ошибка отправки в Telegram: {e}")
 
-# === Запуск ===
+# === Старт ===
 if __name__ == '__main__':
     run_bot()
