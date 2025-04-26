@@ -1,13 +1,14 @@
 import os
 import telebot
 import feedparser
+import requests
 import html
 import re
 
 # === Настройки ===
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 CHANNEL_USERNAME = os.getenv("CHANNEL_USERNAME")
-ARCHIVE_CHANNEL_ID = os.getenv("ARCHIVE_CHANNEL_ID")  # Например: -1001234567890
+ARCHIVE_CHANNEL_ID = os.getenv("ARCHIVE_CHANNEL_ID")  # Канал для архива ссылок
 
 # === Инициализация ===
 bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
@@ -18,7 +19,7 @@ SITES = [
     'https://www.deeplearning.ai/the-batch/tag/news/feed/',
     'https://venturebeat.com/category/ai/feed/',
     'https://syncedreview.com/feed/',
-    'https://www.wired.com/',
+    'https://www.wired.com/feed/',
     'https://www.technologyreview.com/feed/',
     'https://feeds.arstechnica.com/arstechnica/technology-lab',
     'https://habr.com/ru/rss/interesting/',
@@ -33,19 +34,20 @@ KEYWORDS = [
     "automation", "robot", "autonomous", "genai", "ml", "vision"
 ]
 
-# === Получение опубликованных ссылок из канала-архива ===
-def get_posted_urls_from_archive():
-    posted = set()
-    try:
-        messages = bot.get_chat_history(ARCHIVE_CHANNEL_ID, limit=100)
-        for msg in messages:
-            urls = re.findall(r'(https?://\S+)', msg.text or '')
-            posted.update(urls)
-    except Exception as e:
-        print(f"Ошибка чтения архива: {e}")
-    return posted
+# === Файл для хранения опубликованных ссылок ===
+POSTED_URLS_FILE = "posted_urls.txt"
 
 # === Функции ===
+def load_posted_urls():
+    if not os.path.exists(POSTED_URLS_FILE):
+        return set()
+    with open(POSTED_URLS_FILE, "r", encoding="utf-8") as f:
+        return set(line.strip() for line in f)
+
+def save_posted_url(url):
+    with open(POSTED_URLS_FILE, "a", encoding="utf-8") as f:
+        f.write(url + "\n")
+
 def fetch_rss(url):
     feed = feedparser.parse(url)
     print(f"Найдено статей: {len(feed.entries)}")
@@ -65,11 +67,11 @@ def create_post(title, link):
     return f"\U0001F4C8 *{safe_title}*\n\n[Читать статью]({link})"
 
 def run_bot():
-    posted_urls = get_posted_urls_from_archive()
+    posted_urls = load_posted_urls()
     for site in SITES:
         print(f"Проверяю: {site}")
         entries = fetch_rss(site)
-        for entry in entries[:3]:
+        for entry in entries[:3]:  # берём максимум 3 статьи с одного сайта
             url = entry.link
             title = entry.title
 
@@ -80,11 +82,12 @@ def run_bot():
             try:
                 print("\nГотовый пост:\n", post)
                 bot.send_message(CHANNEL_USERNAME, post, parse_mode="Markdown", disable_web_page_preview=False)
-                bot.send_message(ARCHIVE_CHANNEL_ID, url)  # сохраняем ссылку в архивный канал
-                print(f"Опубликовано: {title}")
+                bot.send_message(ARCHIVE_CHANNEL_ID, url)  # отправляем ссылку в архивный канал
+                save_posted_url(url)  # сохраняем ссылку в файл
+                print(f"✅ Опубликовано: {title}")
             except Exception as e:
-                print(f"Ошибка отправки в Telegram: {e}")
+                print(f"❗ Ошибка отправки в Telegram: {e}")
 
-# === Запуск бота ===
+# === Запуск ===
 if __name__ == '__main__':
     run_bot()
