@@ -27,9 +27,16 @@ SITES = [
 
 # === Ключевые слова для фильтрации ===
 KEYWORDS = [
-    "ai", "neural", "machine learning", "deep learning", "llm", "chatgpt", "openai",
-    "generative", "artificial intelligence", "gpt", "sora", "midjourney", "krea",
-    "automation", "robot", "autonomous", "genai", "ml", "vision"
+    # Английские ключевые слова
+    "ai", "artificial intelligence", "machine learning", "deep learning", "llm",
+    "chatgpt", "openai", "gpt", "sora", "midjourney", "krea", "kling", "veo", "wan",
+    "automation", "robot", "autonomous", "genai", "vision", "updates", "ai agents",
+    "n8n", "make", "ai fashion", "ai video", "ai image", "ai challenge", "ai challenges",
+    
+    # Русские ключевые слова
+    "искусственный интеллект", "нейросеть", "нейросети", "машинное обучение", "глубокое обучение",
+    "автоматизация", "робот", "автономный", "генеративный искусственный интеллект",
+    "обновления искусственного интеллекта", "агенты ии", "ai мода", "видео ии", "изображение ии", "челлендж ии"
 ]
 
 # === Функции ===
