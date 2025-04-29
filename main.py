@@ -70,7 +70,7 @@ def run_bot():
         print(f"\nПроверяю сайт: {site}")
         entries = fetch_rss(site)
 
-        for entry in entries[:10]:  # максимум 10 новостей с одного сайта
+        for entry in entries[:30]:  # максимум 30 новостей с одного сайта
             url = entry.link
             title = entry.title
 
