@@ -18,27 +18,36 @@ SITES = [
     'https://www.deeplearning.ai/the-batch/tag/news/feed/',
     'https://venturebeat.com/category/ai/feed/',
     'https://syncedreview.com/feed/',
-    'https://www.technologyreview.com/feed/',
     'https://feeds.arstechnica.com/arstechnica/technology-lab',
     'https://habr.com/ru/rss/interesting/',
     'https://rb.ru/feeds/',
     'https://vc.ru/rss/all'
+    'https://habr.com/ru/hubs/artificial_intelligence/'
+    'https://neurohive.io/ru/novosti/'
+    'https://letaibe.media/category/news/'
+    'https://futuretools.ru/'
+    'https://skillbox.ru/media/'
+    'https://hi-tech.mail.ru/tag/ai-special/'
+    'https://techcrunch.com/category/artificial-intelligence/'
+    'https://www.artificialintelligence-news.com/'
 ]
 
 # === Ключевые слова для фильтрации ===
 KEYWORDS = [
     # Английские ключевые слова
-    "ai", "artificial intelligence", "machine learning", "deep learning", "llm",
+    "ai", "artificial intelligence", "ai tool", "machine learning", "deep learning", "llm",
     "chatgpt", "openai", "gpt", "sora", "midjourney", "krea", "kling", "veo", "wan",
     "automation", "robot", "autonomous", "genai", "vision", "updates", "ai agents",
     "n8n", "make", "ai fashion", "ai video", "ai image", "ai challenge", "ai challenges",
     "ai trend", "ai trends", "image generation", "video generation", "new ai", 
+    "ai movie", "ai exhibition",
     
     # Русские ключевые слова
     "искусственный интеллект", "нейросеть", "нейросети", "машинное обучение", "глубокое обучение",
-    "автоматизация", "робот", "автономный", "генеративный искусственный интеллект",
+    "автоматизация", "робот", "автономный", "ии агент", "генеративный искусственный интеллект",
     "обновления искусственного интеллекта", "агенты ии", "ai мода", "видео ии", "изображение ии", "челлендж ии",
     "конкурс ai", "видео генерация", "генерации картинок", "ии фотостоки", "новая нейросеть", "тренды ии",
+    "ии ассистент", "ai агент", "ai ассистент", "ии инструмент", "ии фильм", "ии выставка", 
 ]
 
 # === Функции ===
