@@ -30,12 +30,13 @@ SITES = [
     'https://hi-tech.mail.ru/tag/ai-special/'
     'https://techcrunch.com/category/artificial-intelligence/'
     'https://www.artificialintelligence-news.com/'
+    'https://www.geeky-gadgets.com/'
 ]
 
 # === Ключевые слова для фильтрации ===
 KEYWORDS = [
     # Английские ключевые слова
-    "ai", "artificial intelligence", "ai tool", "machine learning", "deep learning", "llm",
+    "ai", "runway", "artificial intelligence", "ai tool", "machine learning", "deep learning", "llm",
     "chatgpt", "openai", "gpt", "sora", "midjourney", "krea", "kling", "veo", "wan",
     "automation", "robot", "autonomous", "genai", "vision", "updates", "ai agents",
     "n8n", "make", "ai fashion", "ai video", "ai image", "ai challenge", "ai challenges",
