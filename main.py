@@ -14,23 +14,25 @@ bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
 
 # === Список сайтов ===
 SITES = [
+    # Англоязычные источники
     'https://feeds.bbci.co.uk/news/technology/rss.xml',
-    'https://www.deeplearning.ai/the-batch/tag/news/feed/',
-    'https://venturebeat.com/category/ai/feed/',
+    'https://www.deeplearning.ai/the-batch/feed/',
+    'https://venturebeat.com/feed/',
     'https://syncedreview.com/feed/',
     'https://feeds.arstechnica.com/arstechnica/technology-lab',
+    'https://techcrunch.com/feed/',
+    'https://www.artificialintelligence-news.com/feed/',
+    'https://www.geeky-gadgets.com/feed/',
+
+    # Русскоязычные источники
     'https://habr.com/ru/rss/interesting/',
-    'https://rb.ru/feeds/',
-    'https://vc.ru/rss/all'
-    'https://habr.com/ru/hubs/artificial_intelligence/'
-    'https://neurohive.io/ru/novosti/'
-    'https://letaibe.media/category/news/'
-    'https://futuretools.ru/'
-    'https://skillbox.ru/media/'
-    'https://hi-tech.mail.ru/tag/ai-special/'
-    'https://techcrunch.com/category/artificial-intelligence/'
-    'https://www.artificialintelligence-news.com/'
-    'https://www.geeky-gadgets.com/feed/'
+    'https://habr.com/ru/rss/hub/artificial_intelligence/',
+    'https://neurohive.io/ru/feed/',
+    'https://rb.ru/feeds/tag/ai/',
+    'https://vc.ru/rss/all',
+    'https://hi-tech.mail.ru/rss/all/',
+    'https://skillbox.ru/media/rss.xml',
+    'https://letaibe.media/feed/'
 ]
 
 # === Ключевые слова для фильтрации ===
