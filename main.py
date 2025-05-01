@@ -37,22 +37,45 @@ SITES = [
 
 # === Ключевые слова для фильтрации ===
 KEYWORDS = [
-    # Английские ключевые слова
-    "ai", "runway", "artificial intelligence", "ai tool", "machine learning", "deep learning", "llm",
-    "chatgpt", "openai", "gpt", "sora", "midjourney", "krea", "kling", "veo", "wan",
-    "automation", "robot", "autonomous", "genai", "vision", "updates", "ai agents",
-    "n8n", "make", "ai fashion", "ai video", "ai image", "ai challenge", "ai challenges",
-    "ai trend", "ai trends", "image generation", "video generation", "new ai", 
-    "ai movie", "ai exhibition",
+    # === Английские ключевые слова ===
+    # Популярные ИИ-модели и чат-боты
+    "chatgpt", "gpt", "gpt-4", "gpt-5", "sora", "gemini", "grok", "bard", "claude", "pi", "llm",
     
-    # Русские ключевые слова
-    "искусственный интеллект", "нейросеть", "нейросети", "машинное обучение", "глубокое обучение",
-    "автоматизация", "робот", "автономный", "ии агент", "генеративный искусственный интеллект",
-    "обновления искусственного интеллекта", "агенты ии", "ai мода", "видео ии", "изображение ии", "челлендж ии",
-    "конкурс ai", "видео генерация", "генерации картинок", "ии фотостоки", "новая нейросеть", "тренды ии",
-    "ии ассистент", "ai агент", "ai ассистент", "ии инструмент", "ии фильм", "ии выставка", 
-]
+    # Генерация изображений и видео
+    "midjourney", "dall·e", "stable diffusion", "sdxl", "runway", "runway ml", "runway gen", 
+    "openai sora", "sora video", "pika", "kaiber", "kling ai", "flux", "krea", "leonardo ai", 
+    "ideogram", "dreambooth", "consistency", "consistent character", "style transfer", 
+    "image generation", "video generation", "gen-ai", "ai generated", "ai fashion", "ai art",
+    "ai photo", "ai video", "ai avatar", "ai animation", "ai style", "ai background",
+    
+    # AI-инструменты и ассистенты
+    "auto-gpt", "agentgpt", "babyagi", "langchain", "hugginggpt", "superagi", 
+    "generative agent", "virtual assistant", "ai assistant", "ai agent", 
+    "microsoft copilot", "github copilot", "duet ai", "notion ai", "character ai", "replika",
 
+    # AI-конструкторы сайтов, интеграции и no-code
+    "n8n", "make", "integromat", "10web", "mixo", "framer ai", "durable", 
+    "unicorn platform", "bookmark aida", "uizard", "ai website", "ai builder",
+
+    # Обновления и релизы
+    "ai update", "ai release", "new ai", "ai beta", "ai feature", "ai launch", "ai news", 
+    "gpt update", "midjourney v6", "sora preview", "runway release",
+
+    # Персонализация и обучение моделей
+    "dreambooth", "lora", "controlnet", "fine-tuning", "textual inversion", 
+    "custom model", "one-shot learning", "training character", "stylegan", "nerf", "deepfake", 
+    "personal ai", "ai tuning",
+
+    # === Русские ключевые слова ===
+    "чатгпт", "gpt", "нейросеть", "искусственный интеллект", "большая языковая модель", "llm",
+    "миджорни", "далле", "стейбл дифьюжн", "sdxl", "сора", "рунуэй", "клинг", "креа", "аватар", 
+    "ai видео", "ai фото", "ai мода", "ai стиль", "генерация изображений", "генерация видео", 
+    "обновление gpt", "обновление нейросети", "новости ai", "релиз нейросети", "файнтюнинг", 
+    "dreambooth", "consistent character", "персонаж ai", "фон нейросеть", 
+    "обучение на фото", "ai ассистент", "автоагент", "генеративный агент", 
+    "сайт на нейросети", "генерация сайта", "интеграции ai", "без кода", "ноу код", 
+    "n8n", "make", "создание сайта ai", "ai генератор контента"
+]
 # === Функции ===
 
 def fetch_rss(url):
