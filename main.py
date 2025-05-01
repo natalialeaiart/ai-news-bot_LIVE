@@ -65,9 +65,11 @@ def clean_text(text):
     text = re.sub(r'[\u0000-\u001F\u007F-\u009F]', '', text)
     return text.encode("utf-16", "surrogatepass").decode("utf-16")
 
-def is_relevant(title):
-    title_lower = title.lower()
-    return any(keyword in title_lower for keyword in KEYWORDS)
+def is_relevant(entry):
+    title = entry.title if 'title' in entry else ''
+    description = entry.get('description', '')
+    text = (title + ' ' + description).lower()
+    return any(keyword in text for keyword in KEYWORDS)
 
 def is_fresh(entry):
     if hasattr(entry, 'published_parsed') and entry.published_parsed:
@@ -86,21 +88,19 @@ def run_bot():
     for site in SITES:
         print(f"\nПроверяю сайт: {site}")
         entries = fetch_rss(site)
-
         for entry in entries[:60]:  # максимум 60 новостей с одного сайта
             url = entry.link
             title = entry.title
 
             if not is_fresh(entry):
-                print(f"⏩ Пропущено (старое): {title}")
+                print(f"⏭️ Пропущено (старое): {title}")
                 continue
 
-            if not is_relevant(title):
-                print(f"⏩ Пропущено (не по теме): {title}")
+            if not is_relevant(entry):
+                print(f"⚠️ Пропущено (не по теме): {title}")
                 continue
 
             post = create_post(title, url)
-
             try:
                 print("\nГотовый пост:\n", post)
                 bot.send_message(CHANNEL_USERNAME, post, parse_mode="Markdown", disable_web_page_preview=False)
