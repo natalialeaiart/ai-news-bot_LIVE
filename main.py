@@ -91,7 +91,13 @@ def clean_text(text):
 def is_relevant(entry):
     title = entry.title if 'title' in entry else ''
     description = entry.get('description', '')
-    text = (title + ' ' + description).lower()
+    summary = entry.get('summary', '')
+    content = ''
+
+    if 'content' in entry and isinstance(entry.content, list):
+        content = ' '.join([c.value for c in entry.content if 'value' in c])
+
+    text = (title + " " + description + " " + summary + " " + content).lower()
     return any(keyword in text for keyword in KEYWORDS)
 
 def is_fresh(entry):
@@ -111,12 +117,13 @@ def run_bot():
     for site in SITES:
         print(f"\nПроверяю сайт: {site}")
         entries = fetch_rss(site)
-        for entry in entries[:60]:  # максимум 60 новостей с одного сайта
+
+        for entry in entries[:100]:  # максимум 100 новостей с одного сайта
             url = entry.link
             title = entry.title
 
             if not is_fresh(entry):
-                print(f"⏭️ Пропущено (старое): {title}")
+                print(f"⏩ Пропущено (старое): {title}")
                 continue
 
             if not is_relevant(entry):
@@ -124,12 +131,13 @@ def run_bot():
                 continue
 
             post = create_post(title, url)
+
             try:
                 print("\nГотовый пост:\n", post)
                 bot.send_message(CHANNEL_USERNAME, post, parse_mode="Markdown", disable_web_page_preview=False)
                 print(f"✅ Опубликовано: {title}")
             except Exception as e:
-                print(f"❗ Ошибка отправки в Telegram: {e}")
-
+                print(f"❗ Ошибка отправки в Telegram: {e}\nПост: {post}")
+                
 if __name__ == '__main__':
     run_bot()
