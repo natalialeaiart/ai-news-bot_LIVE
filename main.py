@@ -30,7 +30,7 @@ SITES = [
     'https://hi-tech.mail.ru/tag/ai-special/'
     'https://techcrunch.com/category/artificial-intelligence/'
     'https://www.artificialintelligence-news.com/'
-    'https://www.geeky-gadgets.com/'
+    'https://www.geeky-gadgets.com/feed/'
 ]
 
 # === Ключевые слова для фильтрации ===
