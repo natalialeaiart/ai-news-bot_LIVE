@@ -70,8 +70,11 @@ def is_relevant(title):
 def is_fresh(entry):
     if hasattr(entry, 'published_parsed') and entry.published_parsed:
         published_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))
+        print(f"⏰ Время публикации: {published_time} UTC")
         return published_time >= datetime.utcnow() - timedelta(days=1)
-    return False  # если нет даты публикации — считаем старым
+    else:
+        print("❗ Не удалось определить дату публикации — считаем статью старой.")
+    return False
 
 def create_post(title, link):
     safe_title = clean_text(title)
