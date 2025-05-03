@@ -113,12 +113,24 @@ def create_post(title, link):
     safe_title = clean_text(title)
     return f"\U0001F4C8 *{safe_title}*\n\n[Читать статью]({link})"
 
+import random  # убедись, что импорт есть вверху
+
 def run_bot():
-    for site in SITES:
+    max_posts = 35
+    published_count = 0
+
+    shuffled_sites = SITES.copy()
+    random.shuffle(shuffled_sites)
+
+    for site in shuffled_sites:
         print(f"\nПроверяю сайт: {site}")
         entries = fetch_rss(site)
 
-        for entry in entries[:100]:  # максимум 100 новостей с одного сайта
+        for entry in entries[:100]:  # максимум 100 статей с одного сайта
+            if published_count >= max_posts:
+                print(f"\n✅ Достигнут лимит публикаций: {max_posts}")
+                return
+
             url = entry.link
             title = entry.title
 
@@ -135,7 +147,8 @@ def run_bot():
             try:
                 print("\nГотовый пост:\n", post)
                 bot.send_message(CHANNEL_USERNAME, post, parse_mode="Markdown", disable_web_page_preview=False)
-                print(f"✅ Опубликовано: {title}")
+                published_count += 1
+                print(f"✅ Опубликовано ({published_count}/{max_posts}): {title}")
             except Exception as e:
                 print(f"❗ Ошибка отправки в Telegram: {e}\nПост: {post}")
                 
