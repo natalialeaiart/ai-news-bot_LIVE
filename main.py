@@ -113,44 +113,38 @@ def create_post(title, link):
     safe_title = clean_text(title)
     return f"\U0001F4C8 *{safe_title}*\n\n[Читать статью]({link})"
 
-import random  # убедись, что импорт есть вверху
+import random
 
 def run_bot():
-    max_posts = 70
-    published_count = 0
+    all_entries = []
 
-    shuffled_sites = SITES.copy()
-    random.shuffle(shuffled_sites)
-
-    for site in shuffled_sites:
+    for site in SITES:
         print(f"\nПроверяю сайт: {site}")
         entries = fetch_rss(site)
+        for entry in entries[:100]:
+            if is_fresh(entry) and is_relevant(entry):
+                all_entries.append(entry)
 
-        for entry in entries[:100]:  # максимум 100 статей с одного сайта
-            if published_count >= max_posts:
-                print(f"\n✅ Достигнут лимит публикаций: {max_posts}")
-                return
+    print(f"\nВсего подходящих статей: {len(all_entries)}")
+    random.shuffle(all_entries)  # перемешать список
+    count = 0
 
-            url = entry.link
-            title = entry.title
+    for entry in all_entries:
+        if count >= 35:
+            break
 
-            if not is_fresh(entry):
-                print(f"⏩ Пропущено (старое): {title}")
-                continue
+        url = entry.link
+        title = entry.title
+        post = create_post(title, url)
 
-            if not is_relevant(entry):
-                print(f"⚠️ Пропущено (не по теме): {title}")
-                continue
-
-            post = create_post(title, url)
-
-            try:
-    print("\nГотовый пост:\n", post)
-    bot.send_message(CHANNEL_USERNAME, post, parse_mode="Markdown", disable_web_page_preview=False)
-    print(f"✅ Опубликовано: {title}")
-    time.sleep(1)  # Пауза 1 секунда между сообщениями
-except Exception as e:
-    print(f"❗ Ошибка отправки в Telegram: {e}\nПост: {post}")
+        try:
+            print("\nГотовый пост:\n", post)
+            bot.send_message(CHANNEL_USERNAME, post, parse_mode="Markdown", disable_web_page_preview=False)
+            print(f"✅ Опубликовано: {title}")
+            count += 1
+            time.sleep(1)  # пауза между сообщениями
+        except Exception as e:
+            print(f"❗ Ошибка отправки в Telegram: {e}\nПост: {post}")
                 
 if __name__ == '__main__':
     run_bot()
