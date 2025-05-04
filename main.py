@@ -116,7 +116,7 @@ def create_post(title, link):
 import random  # убедись, что импорт есть вверху
 
 def run_bot():
-    max_posts = 35
+    max_posts = 70
     published_count = 0
 
     shuffled_sites = SITES.copy()
