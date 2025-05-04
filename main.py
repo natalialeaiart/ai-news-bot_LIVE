@@ -145,12 +145,12 @@ def run_bot():
             post = create_post(title, url)
 
             try:
-                print("\nГотовый пост:\n", post)
-                bot.send_message(CHANNEL_USERNAME, post, parse_mode="Markdown", disable_web_page_preview=False)
-                published_count += 1
-                print(f"✅ Опубликовано ({published_count}/{max_posts}): {title}")
-            except Exception as e:
-                print(f"❗ Ошибка отправки в Telegram: {e}\nПост: {post}")
+    print("\nГотовый пост:\n", post)
+    bot.send_message(CHANNEL_USERNAME, post, parse_mode="Markdown", disable_web_page_preview=False)
+    print(f"✅ Опубликовано: {title}")
+    time.sleep(1)  # Пауза 1 секунда между сообщениями
+except Exception as e:
+    print(f"❗ Ошибка отправки в Telegram: {e}\nПост: {post}")
                 
 if __name__ == '__main__':
     run_bot()
