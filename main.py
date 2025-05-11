@@ -85,18 +85,24 @@ def create_post(title, link):
 
 def run_bot():
     all_entries = []
-    seen_urls = set()
 
     for site in SITES:
         print(f"\nПроверяю сайт: {site}")
         entries = fetch_rss(site)
         for entry in entries[:100]:
-            if is_fresh(entry) and is_relevant(entry):
-                if entry.link not in seen_urls:
-                    all_entries.append(entry)
-                    seen_urls.add(entry.link)
+            if is_fresh(entry):
+                print(f"✅ Свежая статья: {entry.title}")
+            else:
+                print(f"⏩ Пропущено (старое): {entry.title}")
+                continue
 
-    print(f"\nВсего подходящих уникальных статей: {len(all_entries)}")
+            if is_relevant(entry):
+                print(f"✅ По теме: {entry.title}")
+                all_entries.append(entry)
+            else:
+                print(f"⚠️ Пропущено (не по теме): {entry.title}")
+
+    print(f"\nВсего подходящих статей: {len(all_entries)}")
     random.shuffle(all_entries)
     count = 0
 
@@ -106,6 +112,7 @@ def run_bot():
         url = entry.link
         title = entry.title
         post = create_post(title, url)
+
         try:
             print("\nГотовый пост:\n", post)
             bot.send_message(CHANNEL_USERNAME, post, parse_mode="Markdown", disable_web_page_preview=False)
