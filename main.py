@@ -9,7 +9,8 @@ from datetime import datetime, timedelta
 
 # === Настройки ===
 
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN") CHANNEL_USERNAME = os.getenv("CHANNEL_USERNAME")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+CHANNEL_USERNAME = os.getenv("CHANNEL_USERNAME")
 
 bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
 
