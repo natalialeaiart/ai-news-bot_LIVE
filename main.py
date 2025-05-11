@@ -7,13 +7,13 @@ import time
 import random
 from datetime import datetime, timedelta
 
-=== Настройки ===
+# === Настройки ===
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN") CHANNEL_USERNAME = os.getenv("CHANNEL_USERNAME")
 
 bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
 
-=== Список сайтов ===
+# === Список сайтов ===
 
 SITES = [ # Англоязычные источники 'https://feeds.bbci.co.uk/news/technology/rss.xml', 'https://www.deeplearning.ai/the-batch/feed/', 'https://venturebeat.com/feed/', 'https://syncedreview.com/feed/', 'https://feeds.arstechnica.com/arstechnica/technology-lab', 'https://techcrunch.com/feed/', 'https://www.artificialintelligence-news.com/feed/', 'https://www.geeky-gadgets.com/feed/',
 
@@ -29,7 +29,7 @@ SITES = [ # Англоязычные источники 'https://feeds.bbci.co.u
 
 ]
 
-=== Ключевые слова для фильтрации ===
+# === Ключевые слова для фильтрации ===
 
 KEYWORDS = [ # Английские "chatgpt", "gpt", "gpt-4", "gpt-5", "sora", "gemini", "grok", "bard", "claude", "pi", "llm", "midjourney", "dall·e", "stable diffusion", "sdxl", "runway", "runway ml", "runway gen", "runway release", "openai sora", "sora video", "pika", "kaiber", "kling ai", "flux", "krea", "leonardo ai", "dreamina", "suno ai", "haiper", "ideogram", "dreambooth", "consistency", "consistent character", "style transfer", "image generation", "video generation", "gen-ai", "ai generated", "ai fashion", "ai art", "ai avatar", "ai animation", "auto-gpt", "agentgpt", "babyagi", "langchain", "hugginggpt", "superagi", "generative agent", "virtual assistant", "ai assistant", "ai agent", "microsoft copilot", "github copilot", "duet ai", "notion ai", "character ai", "replika", "n8n", "make", "integromat", "10web", "mixo", "framer ai", "durable", "unicorn platform", "bookmark aida", "uizard", "ai website", "ai builder", "ai update", "ai release", "new ai", "new ai model", "ai model launch", "new ai platform", "new generator", "ai tool release", "next-gen ai", "ai suite", "gpt update", "midjourney v6", "sora preview", "dreambooth", "lora", "controlnet", "fine-tuning", "textual inversion", "custom model", "one-shot learning", "training character", "stylegan", "nerf", "deepfake", "personal ai", "ai tuning", "ai nft", "generated nft", "ai art nft", "monetize ai art", "sell ai art", "nft platform", "mint nft", "digital art nft", "ai fashion design", "create fashion ai", "monetize ai", "earn with ai", "ai services", "ai business",
 
@@ -45,7 +45,7 @@ KEYWORDS = [ # Английские "chatgpt", "gpt", "gpt-4", "gpt-5", "sora", 
 
 ]
 
-=== Функции ===
+# === Функции ===
 
 def fetch_rss(url): feed = feedparser.parse(url) print(f"Найдено статей на сайте: {len(feed.entries)}") return feed.entries
 
