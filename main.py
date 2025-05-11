@@ -85,15 +85,18 @@ def create_post(title, link):
 
 def run_bot():
     all_entries = []
+    seen_urls = set()
 
     for site in SITES:
         print(f"\nПроверяю сайт: {site}")
         entries = fetch_rss(site)
         for entry in entries[:100]:
             if is_fresh(entry) and is_relevant(entry):
-                all_entries.append(entry)
+                if entry.link not in seen_urls:
+                    all_entries.append(entry)
+                    seen_urls.add(entry.link)
 
-    print(f"\nВсего подходящих статей: {len(all_entries)}")
+    print(f"\nВсего подходящих уникальных статей: {len(all_entries)}")
     random.shuffle(all_entries)
     count = 0
 
@@ -103,7 +106,6 @@ def run_bot():
         url = entry.link
         title = entry.title
         post = create_post(title, url)
-
         try:
             print("\nГотовый пост:\n", post)
             bot.send_message(CHANNEL_USERNAME, post, parse_mode="Markdown", disable_web_page_preview=False)
@@ -112,6 +114,3 @@ def run_bot():
             time.sleep(1)
         except Exception as e:
             print(f"❗ Ошибка отправки в Telegram: {e}\nПост: {post}")
-
-if __name__ == '__main__':
-    run_bot()
