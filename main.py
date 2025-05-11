@@ -1,4 +1,11 @@
-import os import telebot import feedparser import html import re import time import random from datetime import datetime, timedelta
+import os
+import telebot
+import feedparser
+import html
+import re
+import time
+import random
+from datetime import datetime, timedelta
 
 === Настройки ===
 
