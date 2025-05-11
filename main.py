@@ -8,42 +8,73 @@ import random
 from datetime import datetime, timedelta
 
 # === Настройки ===
-
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 CHANNEL_USERNAME = os.getenv("CHANNEL_USERNAME")
-
 bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
 
 # === Список сайтов ===
+SITES = [
+    # Англоязычные источники
+    'https://feeds.bbci.co.uk/news/technology/rss.xml',
+    'https://www.deeplearning.ai/the-batch/feed/',
+    'https://venturebeat.com/feed/',
+    'https://syncedreview.com/feed/',
+    'https://feeds.arstechnica.com/arstechnica/technology-lab',
+    'https://techcrunch.com/feed/',
+    'https://www.artificialintelligence-news.com/feed/',
+    'https://www.geeky-gadgets.com/feed/',
 
-SITES = [ # Англоязычные источники 'https://feeds.bbci.co.uk/news/technology/rss.xml', 'https://www.deeplearning.ai/the-batch/feed/', 'https://venturebeat.com/feed/', 'https://syncedreview.com/feed/', 'https://feeds.arstechnica.com/arstechnica/technology-lab', 'https://techcrunch.com/feed/', 'https://www.artificialintelligence-news.com/feed/', 'https://www.geeky-gadgets.com/feed/',
-
-# Русскоязычные источники
-'https://habr.com/ru/rss/interesting/',
-'https://habr.com/ru/rss/hub/artificial_intelligence/',
-'https://neurohive.io/ru/feed/',
-'https://rb.ru/feeds/tag/ai/',
-'https://vc.ru/rss/all',
-'https://hi-tech.mail.ru/rss/all/',
-'https://skillbox.ru/media/rss.xml',
-'https://letaibe.media/feed/'
-
+    # Русскоязычные источники
+    'https://habr.com/ru/rss/interesting/',
+    'https://habr.com/ru/rss/hub/artificial_intelligence/',
+    'https://neurohive.io/ru/feed/',
+    'https://rb.ru/feeds/tag/ai/',
+    'https://vc.ru/rss/all',
+    'https://hi-tech.mail.ru/rss/all/',
+    'https://skillbox.ru/media/rss.xml',
+    'https://letaibe.media/feed/'
 ]
 
 # === Ключевые слова для фильтрации ===
+KEYWORDS = [
+    # Английские
+    "chatgpt", "gpt", "gpt-4", "gpt-5", "sora", "gemini", "grok", "bard", "claude", "pi", "llm",
+    "midjourney", "dall·e", "stable diffusion", "sdxl", "runway", "runway ml", "runway gen",
+    "openai sora", "sora video", "pika", "kaiber", "kling ai", "flux", "krea", "leonardo ai",
+    "ideogram", "dreambooth", "consistency", "consistent character", "style transfer",
+    "image generation", "video generation", "gen-ai", "ai generated", "ai fashion", "ai art",
+    "ai photo", "ai video", "ai avatar", "ai animation", "ai style", "ai background",
+    "auto-gpt", "agentgpt", "babyagi", "langchain", "hugginggpt", "superagi",
+    "generative agent", "virtual assistant", "ai assistant", "ai agent",
+    "microsoft copilot", "github copilot", "duet ai", "notion ai", "character ai", "replika",
+    "n8n", "make", "integromat", "10web", "mixo", "framer ai", "durable",
+    "unicorn platform", "bookmark aida", "uizard", "ai website", "ai builder",
+    "ai update", "ai release", "ai beta", "ai feature", "ai launch", "ai news",
+    "gpt update", "midjourney v6", "sora preview", "runway release",
+    "dreambooth", "lora", "controlnet", "fine-tuning", "textual inversion",
+    "custom model", "one-shot learning", "training character", "stylegan", "nerf", "deepfake",
+    "personal ai", "ai tuning",
+    "new ai model", "ai model launch", "new ai platform", "new generator", "ai tool release",
+    "next-gen ai", "ai suite",
+    "ai nft", "generated nft", "ai art nft", "monetize ai art", "sell ai art", "nft platform",
+    "mint nft", "digital art nft",
+    "ai fashion design", "create fashion ai",
+    "monetize ai", "earn with ai", "ai services", "ai business",
 
-KEYWORDS = [ # Английские "chatgpt", "gpt", "gpt-4", "gpt-5", "sora", "gemini", "grok", "bard", "claude", "pi", "llm", "midjourney", "dall·e", "stable diffusion", "sdxl", "runway", "runway ml", "runway gen", "runway release", "openai sora", "sora video", "pika", "kaiber", "kling ai", "flux", "krea", "leonardo ai", "dreamina", "suno ai", "haiper", "ideogram", "dreambooth", "consistency", "consistent character", "style transfer", "image generation", "video generation", "gen-ai", "ai generated", "ai fashion", "ai art", "ai avatar", "ai animation", "auto-gpt", "agentgpt", "babyagi", "langchain", "hugginggpt", "superagi", "generative agent", "virtual assistant", "ai assistant", "ai agent", "microsoft copilot", "github copilot", "duet ai", "notion ai", "character ai", "replika", "n8n", "make", "integromat", "10web", "mixo", "framer ai", "durable", "unicorn platform", "bookmark aida", "uizard", "ai website", "ai builder", "ai update", "ai release", "new ai", "new ai model", "ai model launch", "new ai platform", "new generator", "ai tool release", "next-gen ai", "ai suite", "gpt update", "midjourney v6", "sora preview", "dreambooth", "lora", "controlnet", "fine-tuning", "textual inversion", "custom model", "one-shot learning", "training character", "stylegan", "nerf", "deepfake", "personal ai", "ai tuning", "ai nft", "generated nft", "ai art nft", "monetize ai art", "sell ai art", "nft platform", "mint nft", "digital art nft", "ai fashion design", "create fashion ai", "monetize ai", "earn with ai", "ai services", "ai business",
-
-# Русские
-"gpt", "нейросеть", "искусственный интеллект", "большая языковая модель", "llm", "новая нейросеть", "запуск нейросети",
-"новая платформа ии", "новый генератор", "релиз инструмента ии", "ии следующего поколения", "набор инструментов ии",
-"ai видео", "ai фото", "ai мода", "ai стиль", "генерация изображений", "генерация видео", "обновление gpt", "обновление нейросети",
-"релиз нейросети", "файнтюнинг", "dreambooth", "consistent character", "персонаж ai", "фон нейросеть", "обучение на фото",
-"ai ассистент", "автоагент", "генеративный агент", "сайт на нейросети", "генерация сайта", "без кода", "ноу код", "n8n", "make",
-"создание сайта ai", "ai генератор контента",
-"ai nft", "сгенерированный nft", "ai арт nft", "монетизация ai арт", "продать ai арт", "платформа nft", "минт nft", "цифровой арт nft",
-"дизайн одежды ai", "создание моды ai", "монетизация ии", "заработок с помощью ии", "ai услуги", "ai бизнес"
-
+    # Русские
+    "gpt", "нейросеть", "искусственный интеллект", "большая языковая модель", "llm",
+    "ai видео", "ai фото", "ai мода", "ai стиль", "генерация изображений", "генерация видео",
+    "обновление gpt", "обновление нейросети", "релиз нейросети", "файнтюнинг",
+    "dreambooth", "consistent character", "персонаж ai", "фон нейросеть",
+    "обучение на фото", "ai ассистент", "автоагент", "генеративный агент",
+    "сайт на нейросети", "генерация сайта", "без кода", "ноу код",
+    "создание сайта ai", "ai генератор контента",
+    "новая нейросеть", "запуск нейросети", "новая платформа ии", "новый генератор",
+    "релиз инструмента ии", "ии следующего поколения", "набор инструментов ии",
+    "сгенерированный nft", "ai арт nft", "монетизация ai арт", "продать ai арт",
+    "платформа nft", "минт nft", "цифровой арт nft",
+    "дизайн одежды ai", "создание моды ai",
+    "монетизация ии", "заработок с помощью ии", "ai услуги", "ai бизнес"
 ]
 
 # === Функции ===
@@ -90,17 +121,8 @@ def run_bot():
         print(f"\nПроверяю сайт: {site}")
         entries = fetch_rss(site)
         for entry in entries[:100]:
-            if is_fresh(entry):
-                print(f"✅ Свежая статья: {entry.title}")
-            else:
-                print(f"⏩ Пропущено (старое): {entry.title}")
-                continue
-
-            if is_relevant(entry):
-                print(f"✅ По теме: {entry.title}")
+            if is_fresh(entry) and is_relevant(entry):
                 all_entries.append(entry)
-            else:
-                print(f"⚠️ Пропущено (не по теме): {entry.title}")
 
     print(f"\nВсего подходящих статей: {len(all_entries)}")
     random.shuffle(all_entries)
@@ -109,6 +131,7 @@ def run_bot():
     for entry in all_entries:
         if count >= 35:
             break
+
         url = entry.link
         title = entry.title
         post = create_post(title, url)
@@ -121,3 +144,6 @@ def run_bot():
             time.sleep(1)
         except Exception as e:
             print(f"❗ Ошибка отправки в Telegram: {e}\nПост: {post}")
+
+if __name__ == '__main__':
+    run_bot()
