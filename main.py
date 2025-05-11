@@ -48,35 +48,70 @@ KEYWORDS = [ # Английские "chatgpt", "gpt", "gpt-4", "gpt-5", "sora", 
 
 # === Функции ===
 
-def fetch_rss(url): feed = feedparser.parse(url) print(f"Найдено статей на сайте: {len(feed.entries)}") return feed.entries
+def fetch_rss(url):
+    feed = feedparser.parse(url)
+    print(f"Найдено статей на сайте: {len(feed.entries)}")
+    return feed.entries
 
-def clean_text(text): text = html.unescape(text) text = re.sub(r'[\u0000-\u001F\u007F-\u009F]', '', text) return text.encode("utf-16", "surrogatepass").decode("utf-16")
+def clean_text(text):
+    text = html.unescape(text)
+    text = re.sub(r'[\u0000-\u001F\u007F-\u009F]', '', text)
+    return text.encode("utf-16", "surrogatepass").decode("utf-16")
 
-def is_relevant(entry): title = entry.title if 'title' in entry else '' description = entry.get('description', '') summary = entry.get('summary', '') content = '' if 'content' in entry and isinstance(entry.content, list): content = ' '.join([c.value for c in entry.content if 'value' in c]) text = (title + ' ' + description + ' ' + summary + ' ' + content).lower() return any(keyword in text for keyword in KEYWORDS)
+def is_relevant(entry):
+    title = entry.title if 'title' in entry else ''
+    description = entry.get('description', '')
+    summary = entry.get('summary', '')
+    content = ''
 
-def is_fresh(entry): if hasattr(entry, 'published_parsed') and entry.published_parsed: published_time = datetime.fromtimestamp(time.mktime(entry.published_parsed)) print(f"⏰ Время публикации: {published_time} UTC") return published_time >= datetime.utcnow() - timedelta(days=1) else: print("❗ Не удалось определить дату публикации — считаем статью старой.") return False
+    if 'content' in entry and isinstance(entry.content, list):
+        content = ' '.join([c.value for c in entry.content if 'value' in c])
 
-def create_post(title, link): safe_title = clean_text(title) return f"\U0001F4C8 {safe_title}\n\nЧитать статью"
+    text = (title + ' ' + description + ' ' + summary + ' ' + content).lower()
+    return any(keyword in text for keyword in KEYWORDS)
 
-def run_bot(): all_entries = [] for site in SITES: print(f"\nПроверяю сайт: {site}") entries = fetch_rss(site) for entry in entries[:100]: if is_fresh(entry) and is_relevant(entry): all_entries.append(entry)
+def is_fresh(entry):
+    if hasattr(entry, 'published_parsed') and entry.published_parsed:
+        published_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))
+        print(f"⏰ Время публикации: {published_time} UTC")
+        return published_time >= datetime.utcnow() - timedelta(days=1)
+    else:
+        print("❗ Не удалось определить дату публикации — считаем статью старой.")
+    return False
 
-print(f"\nВсего подходящих статей: {len(all_entries)}")
-random.shuffle(all_entries)
-count = 0
-for entry in all_entries:
-    if count >= 35:
-        break
-    url = entry.link
-    title = entry.title
-    post = create_post(title, url)
-    try:
-        print("\nГотовый пост:\n", post)
-        bot.send_message(CHANNEL_USERNAME, post, parse_mode="Markdown", disable_web_page_preview=False)
-        print(f"✅ Опубликовано: {title}")
-        count += 1
-        time.sleep(1)
-    except Exception as e:
-        print(f"❗ Ошибка отправки в Telegram: {e}\nПост: {post}")
+def create_post(title, link):
+    safe_title = clean_text(title)
+    return f"\U0001F4C8 *{safe_title}*\n\n[Читать статью]({link})"
 
-if name == 'main': run_bot()
+def run_bot():
+    all_entries = []
 
+    for site in SITES:
+        print(f"\nПроверяю сайт: {site}")
+        entries = fetch_rss(site)
+        for entry in entries[:100]:
+            if is_fresh(entry) and is_relevant(entry):
+                all_entries.append(entry)
+
+    print(f"\nВсего подходящих статей: {len(all_entries)}")
+    random.shuffle(all_entries)
+    count = 0
+
+    for entry in all_entries:
+        if count >= 35:
+            break
+        url = entry.link
+        title = entry.title
+        post = create_post(title, url)
+
+        try:
+            print("\nГотовый пост:\n", post)
+            bot.send_message(CHANNEL_USERNAME, post, parse_mode="Markdown", disable_web_page_preview=False)
+            print(f"✅ Опубликовано: {title}")
+            count += 1
+            time.sleep(1)
+        except Exception as e:
+            print(f"❗ Ошибка отправки в Telegram: {e}\nПост: {post}")
+
+if __name__ == '__main__':
+    run_bot()
