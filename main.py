@@ -20,7 +20,6 @@ SITES = [
     'https://venturebeat.com/feed/',
     'https://syncedreview.com/feed/',
     'https://feeds.arstechnica.com/arstechnica/technology-lab',
-    'https://techcrunch.com/feed/',
     'https://www.artificialintelligence-news.com/feed/',
     'https://www.geeky-gadgets.com/feed/',
 
