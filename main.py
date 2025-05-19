@@ -29,7 +29,6 @@ SITES = [
     'https://neurohive.io/ru/feed/',
     'https://rb.ru/feeds/tag/ai/',
     'https://vc.ru/rss/all',
-    'https://hi-tech.mail.ru/rss/all/',
     'https://skillbox.ru/media/rss.xml',
     'https://letaibe.media/feed/'
 ]
