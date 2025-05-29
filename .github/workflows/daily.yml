@@ -28,4 +28,4 @@ jobs:
         CHANNEL1_USERNAME: ${{ secrets.CHANNEL1_USERNAME }}
         CHANNEL2_USERNAME: ${{ secrets.CHANNEL2_USERNAME }}
       run: |
-        python updated_dual_channel_main.py
+        python main.py
