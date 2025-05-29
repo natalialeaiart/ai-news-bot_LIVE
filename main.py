@@ -17,15 +17,23 @@ bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
 # === Список сайтов ===
 SITES = [
     # Англоязычные источники
-    'https://deeplearning.ai/the-batch/feed/',
+    'https://feeds.bbci.co.uk/news/technology/rss.xml',
+    'https://www.deeplearning.ai/the-batch/feed/',
+    'https://venturebeat.com/feed/',
     'https://syncedreview.com/feed/',
     'https://feeds.arstechnica.com/arstechnica/technology-lab',
+    'https://techcrunch.com/feed/',
     'https://artificialintelligence-news.com/feed/',
+    'https://www.geeky-gadgets.com/feed/',
 
     # Русскоязычные источники
+    'https://habr.com/ru/rss/interesting/',
     'https://habr.com/ru/rss/hub/artificial_intelligence/',
     'https://neurohive.io/ru/feed/',
     'https://rb.ru/feeds/tag/ai/',
+    'https://vc.ru/rss/all',
+    'https://hi-tech.mail.ru/rss/all/',
+    'https://skillbox.ru/media/rss.xml',
     'https://letaibe.media/feed/'
 ]
 
