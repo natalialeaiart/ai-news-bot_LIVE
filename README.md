@@ -1,7 +1,7 @@
 # 🤖 AI News Bot
 
-[![AI Agents Daily](https://img.shields.io/badge/GitHub%20Actions-Automated-blue?logo=github-actions)](https://t.me/ai_agents_daily)
-[![Creative AI News](https://img.shields.io/badge/Telegram-Bot%20API-blue?logo=telegram)](https://t.me/ainews_nataliale)
+[![AI Agents Daily](https://img.shields.io/badge/Telegram-AI%20Agents%20Daily-blue?logo=telegram)](https://t.me/ai_agents_daily)
+[![Creative AI News](https://img.shields.io/badge/Telegram-Creative%20AI%20News-blue?logo=telegram)](https://t.me/ainews_nataliale)
 
 Автоматизированный Telegram-бот, который ежедневно публикует отобранные AI-новости в два тематических канала:
 
