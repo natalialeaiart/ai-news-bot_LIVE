@@ -18,11 +18,14 @@ bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
 SITES = [
     # Англоязычные источники
     'https://feeds.bbci.co.uk/news/technology/rss.xml',
+    'https://www.theneurondaily.com/',
     'https://www.deeplearning.ai/the-batch/feed/',
     'https://venturebeat.com/feed/',
     'https://syncedreview.com/feed/',
     'https://feeds.arstechnica.com/arstechnica/technology-lab',
-    'https://techcrunch.com/feed/',
+    'https://www.superhuman.ai/',
+    'https://www.rundown.ai/articles',
+    'https://www.bensbites.com/',
     'https://artificialintelligence-news.com/feed/',
     'https://www.geeky-gadgets.com/feed/',
     
@@ -32,7 +35,6 @@ SITES = [
     'https://neurohive.io/ru/feed/',
     'https://rb.ru/feeds/tag/ai/',
     'https://vc.ru/rss/all',
-    'https://hi-tech.mail.ru/rss/all/',
     'https://skillbox.ru/media/rss.xml',
     'https://letaibe.media/feed/'
 ]
