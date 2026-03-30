@@ -27,7 +27,6 @@ SITES = [
     'https://www.rundown.ai/articles',
     'https://www.bensbites.com/',
     'https://artificialintelligence-news.com/feed/',
-    'https://www.geeky-gadgets.com/feed/',
     
     # Русскоязычные источники
     'https://habr.com/ru/rss/interesting/',
