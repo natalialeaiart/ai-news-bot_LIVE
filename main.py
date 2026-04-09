@@ -23,7 +23,6 @@ SITES = [
     'https://syncedreview.com/feed/',
     'https://feeds.arstechnica.com/arstechnica/technology-lab',
     'https://rss.beehiiv.com/feeds/2R3C6Bt5wj.xml',             # The Rundown AI
-    'https://www.bensbites.com/feed',                            # Ben's Bites
     'https://artificialintelligence-news.com/feed/',
     'https://www.geeky-gadgets.com/category/artificial-intelligence/feed/',  # была пропущена запятая
 
